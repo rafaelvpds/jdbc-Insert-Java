@@ -21,17 +21,20 @@ public class Program {
 		try {
 			conn = DB.getConnection();
 
-			ps = conn.prepareStatement(
-					"INSERT INTO seller " + "(Name, Email, BirthDate, BaseSalary, DepartmentId) VALUES (?,?,?,?,?)",
+			/*
+			 * ps = conn.prepareStatement( "INSERT INTO seller " +
+			 * "(Name, Email, BirthDate, BaseSalary, DepartmentId) VALUES (?,?,?,?,?)",
+			 * Statement.RETURN_GENERATED_KEYS);
+			 * 
+			 * // COMANDOS PARA TROCAR OS ? PELOS VALORES QUE EU QUERO
+			 * 
+			 * ps.setString(1, "Rafael"); ps.setString(2, "rafael@gmail.com"); ps.setDate(3,
+			 * new java.sql.Date(sdf.parse("09/11/1990").getTime())); ps.setDouble(4,
+			 * 10000); ps.setInt(5, 4);
+			 */
+			// ATRIBUINDO DOIS VALORES COM COMANDO SQL
+			ps = conn.prepareStatement("INSERT INTO department (Name) VALUES ('Gamer'), ('Beleza') ",
 					Statement.RETURN_GENERATED_KEYS);
-
-			// COMANDOS PARA TROCAR OS ? PELOS VALORES QUE EU QUERO
-
-			ps.setString(1, "Rafael");
-			ps.setString(2, "rafael@gmail.com");
-			ps.setDate(3, new java.sql.Date(sdf.parse("09/11/1990").getTime()));
-			ps.setDouble(4, 10000);
-			ps.setInt(5, 4);
 			// o resultado desta operação e um numero inteiro indicando quantas linhas foram
 			// alteradas
 			int rowsAffect = ps.executeUpdate();
@@ -51,8 +54,6 @@ public class Program {
 				System.out.println("no rows affect");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
 			e.printStackTrace();
 		} finally {
 			DB.closeStatement(ps);
